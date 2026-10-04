@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pixel Icons</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2 2'%3E%3Crect width='2' height='2' fill='white'/%3E%3Crect width='1' height='1' fill='%23111'/%3E%3Crect x='1' y='1' width='1' height='1' fill='%23111'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="styles.css?v=21" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Pixel Icons</h1>
+        <div class="size-control">
+          <select id="size" aria-label="Pixel density">
+            <option value="5">5x5</option>
+            <option value="8">8x8</option>
+            <option value="16" selected>16x16</option>
+            <option value="24">24x24</option>
+            <option value="32">32x32</option>
+            <option value="48">48x48</option>
+            <option value="64">64x64</option>
+            <option value="128">128x128</option>
+            <option value="custom" data-entry="true">Custom</option>
+          </select>
+          <div class="size-entry">
+            <input id="manual-size" type="number" min="2" max="256" step="1" value="16" inputmode="numeric" aria-label="Custom grid size" />
+            <span id="size-pair" aria-hidden="true"></span>
+          </div>
+        </div>
+      </header>
+
+      <div class="stage">
+        <div id="viewport" class="viewport">
+          <div id="board" class="board">
+            <canvas id="canvas" role="application" aria-label="Pixel canvas"></canvas>
+            <svg class="guides" viewBox="0 0 100 100" aria-hidden="true">
+              <circle cx="50" cy="50" r="49.75" />
+              <circle cx="50" cy="50" r="33" />
+              <circle cx="50" cy="50" r="16.5" />
+              <line x1="50" y1="0" x2="50" y2="100" />
+              <line x1="0" y1="50" x2="100" y2="50" />
+              <rect id="margin" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="tools">
+        <div class="segment" role="group" aria-label="Tool">
+          <button type="button" id="auto" class="icon-button" aria-pressed="true" aria-label="Auto">
+            <svg viewBox="0 0 5 5" width="20" height="20" aria-hidden="true" shape-rendering="crispEdges">
+              <rect x="0" y="0" width="1" height="1"/>
+              <rect x="2" y="0" width="1" height="1"/>
+              <rect x="4" y="0" width="1" height="1"/>
+              <rect x="1" y="1" width="3" height="1"/>
+              <rect x="0" y="2" width="2" height="1"/>
+              <rect x="3" y="2" width="2" height="1"/>
+              <rect x="1" y="3" width="3" height="1"/>
+              <rect x="0" y="4" width="1" height="1"/>
+              <rect x="2" y="4" width="1" height="1"/>
+              <rect x="4" y="4" width="1" height="1"/>
+            </svg>
+            <span>Auto</span>
+          </button>
+          <button type="button" id="paint" class="icon-button" aria-pressed="false" aria-label="Paint">
+            <svg viewBox="0 0 5 5" width="20" height="20" aria-hidden="true" shape-rendering="crispEdges">
+              <rect x="4" y="0" width="1" height="1"/>
+              <rect x="3" y="1" width="1" height="1"/>
+              <rect x="2" y="2" width="1" height="1"/>
+              <rect x="1" y="3" width="2" height="1"/>
+              <rect x="0" y="4" width="2" height="1"/>
+            </svg>
+            <span>Paint</span>
+          </button>
+          <button type="button" id="erase" class="icon-button" aria-pressed="false" aria-label="Erase">
+            <svg viewBox="0 0 5 5" width="20" height="20" aria-hidden="true" shape-rendering="crispEdges">
+              <rect x="1" y="0" width="3" height="1"/>
+              <rect x="1" y="1" width="3" height="1"/>
+              <rect x="1" y="2" width="3" height="1"/>
+              <rect x="1" y="3" width="1" height="1"/>
+              <rect x="3" y="3" width="1" height="1"/>
+              <rect x="1" y="4" width="2" height="1"/>
+            </svg>
+            <span>Erase</span>
+          </button>
+        </div>
+        <button type="button" id="clear" class="icon-button" aria-label="Clear">
+          <svg viewBox="0 0 5 5" width="20" height="20" aria-hidden="true" shape-rendering="crispEdges">
+            <rect x="0" y="0" width="1" height="1"/>
+            <rect x="4" y="0" width="1" height="1"/>
+            <rect x="1" y="1" width="1" height="1"/>
+            <rect x="3" y="1" width="1" height="1"/>
+            <rect x="2" y="2" width="1" height="1"/>
+            <rect x="1" y="3" width="1" height="1"/>
+            <rect x="3" y="3" width="1" height="1"/>
+            <rect x="0" y="4" width="1" height="1"/>
+            <rect x="4" y="4" width="1" height="1"/>
+          </svg>
+          <span>Clear</span>
+        </button>
+        <div class="segment" role="group" aria-label="Transform">
+          <button type="button" id="rotate" class="icon-button" aria-label="Rotate right">
+            <svg viewBox="0 0 5 5" width="20" height="20" aria-hidden="true" shape-rendering="crispEdges">
+              <rect x="1" y="0" width="2" height="1"/>
+              <rect x="4" y="0" width="1" height="1"/>
+              <rect x="0" y="1" width="1" height="1"/>
+              <rect x="3" y="1" width="2" height="1"/>
+              <rect x="0" y="2" width="1" height="1"/>
+              <rect x="2" y="2" width="3" height="1"/>
+              <rect x="0" y="3" width="1" height="1"/>
+              <rect x="1" y="4" width="3" height="1"/>
+            </svg>
+            <span>Rotate</span>
+          </button>
+          <button type="button" id="mirror-v" class="icon-button" aria-label="Mirror V">
+            <svg viewBox="0 0 5 5" width="20" height="20" aria-hidden="true" shape-rendering="crispEdges">
+              <rect x="0" y="0" width="1" height="1"/>
+              <rect x="4" y="0" width="1" height="1"/>
+              <rect x="1" y="1" width="3" height="1"/>
+              <rect x="1" y="3" width="3" height="1"/>
+              <rect x="0" y="4" width="1" height="1"/>
+              <rect x="4" y="4" width="1" height="1"/>
+            </svg>
+            <span>Mirror V</span>
+          </button>
+          <button type="button" id="mirror-h" class="icon-button" aria-label="Mirror H">
+            <svg viewBox="0 0 5 5" width="20" height="20" aria-hidden="true" shape-rendering="crispEdges">
+              <rect x="0" y="0" width="1" height="1"/>
+              <rect x="4" y="0" width="1" height="1"/>
+              <rect x="1" y="1" width="1" height="1"/>
+              <rect x="3" y="1" width="1" height="1"/>
+              <rect x="1" y="2" width="1" height="1"/>
+              <rect x="3" y="2" width="1" height="1"/>
+              <rect x="1" y="3" width="1" height="1"/>
+              <rect x="3" y="3" width="1" height="1"/>
+              <rect x="0" y="4" width="1" height="1"/>
+              <rect x="4" y="4" width="1" height="1"/>
+            </svg>
+            <span>Mirror H</span>
+          </button>
+        </div>
+      </div>
+
+      <form id="save-form" class="save-row">
+        <div class="name-field">
+          <input id="name" type="text" placeholder="Icon name" autocomplete="off" spellcheck="false" />
+          <button type="button" id="clear-name" aria-label="Clear name" hidden>X</button>
+        </div>
+        <button type="submit" class="icon-button" aria-label="Save">
+          <svg viewBox="0 0 5 5" width="20" height="20" aria-hidden="true" shape-rendering="crispEdges">
+            <rect x="0" y="0" width="4" height="1"/>
+            <rect x="0" y="1" width="1" height="1"/>
+            <rect x="4" y="1" width="1" height="1"/>
+            <rect x="0" y="2" width="5" height="1"/>
+            <rect x="0" y="3" width="5" height="1"/>
+            <rect x="0" y="4" width="5" height="1"/>
+          </svg>
+          <span>Save</span>
+        </button>
+        <button type="button" id="copy" class="icon-button" aria-label="Copy" disabled>
+          <svg viewBox="0 0 5 5" width="20" height="20" aria-hidden="true" shape-rendering="crispEdges">
+            <rect x="2" y="0" width="3" height="1"/>
+            <rect x="0" y="1" width="3" height="1"/>
+            <rect x="4" y="1" width="1" height="1"/>
+            <rect x="0" y="2" width="1" height="1"/>
+            <rect x="2" y="2" width="3" height="1"/>
+            <rect x="0" y="3" width="1" height="1"/>
+            <rect x="3" y="3" width="1" height="1"/>
+            <rect x="0" y="4" width="4" height="1"/>
+          </svg>
+          <span>Copy</span>
+        </button>
+        <button type="button" id="download" class="icon-button" aria-label="Download" disabled>
+          <svg viewBox="0 0 5 5" width="20" height="20" aria-hidden="true" shape-rendering="crispEdges">
+            <rect x="2" y="0" width="1" height="1"/>
+            <rect x="2" y="1" width="1" height="1"/>
+            <rect x="0" y="2" width="1" height="1"/>
+            <rect x="2" y="2" width="1" height="1"/>
+            <rect x="4" y="2" width="1" height="1"/>
+            <rect x="1" y="3" width="3" height="1"/>
+            <rect x="2" y="4" width="1" height="1"/>
+          </svg>
+          <span>Download</span>
+        </button>
+      </form>
+
+      <section class="gallery" aria-labelledby="gallery-heading">
+        <h2 id="gallery-heading">Gallery</h2>
+        <p id="gallery-empty">Saved icons land here.</p>
+        <ul id="gallery-list"></ul>
+      </section>
+    </main>
+
+    <dialog id="ask">
+      <form method="dialog">
+        <p id="ask-text"></p>
+        <div class="ask-actions">
+          <button value="cancel">Cancel</button>
+          <button id="ask-confirm" value="confirm">Delete</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="app.js?v=21"></script>
+  </body>
+</html>
